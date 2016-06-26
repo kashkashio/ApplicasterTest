@@ -1,7 +1,10 @@
 package com.kashkash.applicaster.applicaster;
 
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,12 +44,15 @@ public class SearchResultsFragment extends ListFragment {
 
     public static final String ARG_SEARCH_REQUEST = "request";
 
+    public SearchResultsFragment mFragment;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list_tweets, container, false);
         brandAdapter = new TweetAdapter(getActivity(), new TweetList());
+        this.mFragment = this;
         setListAdapter(brandAdapter);
         request = getArguments().getString(ARG_SEARCH_REQUEST);
         return rootView;
@@ -61,6 +67,16 @@ public class SearchResultsFragment extends ListFragment {
         } else {
             String token = PrefsController.getAccessToken(getActivity());
             getBus().post(new SearchTweetsEvent(token, request));
+
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    makeToast(getActivity(), "Refreshing...");
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.detach(mFragment).attach(mFragment).commit();
+                }
+            }, 8000);
         }
     }
 
@@ -83,29 +99,6 @@ public class SearchResultsFragment extends ListFragment {
     @Subscribe
     public void onSearchTweetsEventOk(final SearchTweetsEventOk event) {
         brandAdapter.setTweetList(event.tweetsList);
-
-        for (Tweet tweet : event.tweetsList.tweets){
-//            if(){
-
-//            }
-//            for(TwitterMedia media: tweet.tweetEntities.media){
-//                Log.i("Media Url: ", media.toString());
-//            }
-
-        }
-
-//        for (Tweet tweet : event.tweetsList){
-//            Log.i("Member name: ", member);
-//        }
-//        ArrayList list = event.tweetsList.tweets;
-//        for (int i =0 ;i<list.length;i++)
-//        {
-//            Log.v("Array Value","Array Value"+list[i]);
-//        }
-//        for(Tweet tw : Arra){
-
-//        }
-
         brandAdapter.notifyDataSetChanged();
     }
 
