@@ -4,20 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.kashkash.applicaster.applicaster.api.TwitterMedia;
 import com.squareup.picasso.Picasso;
 import com.kashkash.applicaster.applicaster.R;
 import com.kashkash.applicaster.applicaster.api.TweetList;
@@ -60,12 +55,12 @@ public class TweetAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null; // we don't need it now
+        return null;
     }
 
     @Override
     public long getItemId(int position) {
-        return 0; // we don't need it now
+        return 0;
     }
 
     @Override
@@ -90,21 +85,7 @@ public class TweetAdapter extends BaseAdapter {
         Picasso.with(mContext).load(tweetList.tweets.get(position).user.profileImageUrl).into(holder.imageLogo);
         if(tweetList.tweets.get(position).tweetEntities.media != null) {
             this.updateTextViewSize(holder);
-//            Log.d("image url",tweetList.tweets.get(position).tweetEntities.media.get(0).mediaUrl);
             Picasso.with(mContext).load(tweetList.tweets.get(position).tweetEntities.media.get(0).mediaUrl).into(holder.tweetMedia);
-//
-//            holder.tweetMedia.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int userImagewidth = (int) (48 * Resources.getSystem().getDisplayMetrics().density);//48dp Predefined in the xml layout
-//                    Toast.makeText(mContext, "Image Tapped"+view.getId(), Toast.LENGTH_LONG).show();
-//                    ResizeAnimation animation = new ResizeAnimation(holder.tweetMedia,userImagewidth,userImagewidth,Resources.getSystem().getDisplayMetrics().widthPixels,Resources.getSystem().getDisplayMetrics().heightPixels);
-//                    Transformation transformation = new Transformation();
-//                    animation.applyTransformation(1200,transformation);
-//
-//                }
-//            });
-
         }
 
         return row;

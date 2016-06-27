@@ -2,19 +2,13 @@ package com.kashkash.applicaster.applicaster;
 
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.kashkash.applicaster.applicaster.api.Tweet;
-import com.kashkash.applicaster.applicaster.api.TwitterEntities;
-import com.kashkash.applicaster.applicaster.api.TwitterMedia;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 import com.kashkash.applicaster.applicaster.api.TweetList;
@@ -22,9 +16,6 @@ import com.kashkash.applicaster.applicaster.event.*;
 import com.kashkash.applicaster.applicaster.util.BusProvider;
 import com.kashkash.applicaster.applicaster.util.PrefsController;
 import com.kashkash.applicaster.applicaster.util.TweetAdapter;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static com.kashkash.applicaster.applicaster.util.Util.makeToast;
 
@@ -34,13 +25,11 @@ import static com.kashkash.applicaster.applicaster.util.Util.makeToast;
 
 public class SearchResultsFragment extends ListFragment {
 
-    private static final String TAG = SearchResultsFragment.class.getName();
+
     private Bus mBus;
     private String request;
 
     private TweetAdapter brandAdapter;
-
-    private TextView textResult;
 
     public static final String ARG_SEARCH_REQUEST = "request";
 

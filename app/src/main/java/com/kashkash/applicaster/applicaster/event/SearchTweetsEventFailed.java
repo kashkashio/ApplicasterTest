@@ -6,6 +6,5 @@ package com.kashkash.applicaster.applicaster.event;
 public class SearchTweetsEventFailed {
 
     // for now just show error page
-    // TODO add error codes
 
 }
